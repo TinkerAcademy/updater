@@ -51,7 +51,7 @@ def get_relative_file_paths_in_dir(dir_path):
 			if rel_root:
 				for file_ in files:
 					relative_file_path = os.path.join(rel_root, file_)
-					log_message('get_relative_file_paths_in_dir adding relative_file_path=' + str(relative_file_path))
+					# log_message('get_relative_file_paths_in_dir adding relative_file_path=' + str(relative_file_path))
 					relative_file_paths.append(relative_file_path)
 	log_message('get_relative_file_paths_in_dir exit')
 	return relative_file_paths
@@ -103,16 +103,16 @@ def copy_files(source_file_paths, target_file_paths, clobber=False):
 	return ret
 
 def calc_digest(file_path):
-	log_message('calc_digest enter')
-	log_message('calc_digest file_path='+file_path)
+	# log_message('calc_digest enter')
+	# log_message('calc_digest file_path='+file_path)
 	digest = None
 	readable_file = os.path.exists(file_path) and os.path.isfile(file_path)
 	if readable_file:
 		content = read_content(file_path)
 		if content:
 			digest = hashlib.md5(content).hexdigest
-			log_message('calc_digest digest='+str(digest))
-	log_message('calc_digest exit')
+			# log_message('calc_digest digest='+str(digest))
+	# log_message('calc_digest exit')
 	return digest
 
 def get_course_paths(base_course_path, student_id):
@@ -243,17 +243,17 @@ def read_config(file_path, id_key):
 	return config
 
 def read_lines(file_path):
-	log_message('read_lines enter')
+	# log_message('read_lines enter')
 	lines = None
 	content = read_content(file_path)
 	if content:
 		lines = content.splitlines()
-	log_message('read_lines exit')
+	# log_message('read_lines exit')
 	return lines
 
 def read_content(file_path):
-	log_message('read_content enter')
-	log_message('read_content file_path='+str(file_path))
+	# log_message('read_content enter')
+	# log_message('read_content file_path='+str(file_path))
 	content = None
 	if os.path.isfile(file_path):
 		file_handle = None
@@ -268,7 +268,7 @@ def read_content(file_path):
 					file_handle.close()
 				except:
 					log_error()
-	log_message('read_content exit')
+	# log_message('read_content exit')
 	return content
 
 def log_message(message):
