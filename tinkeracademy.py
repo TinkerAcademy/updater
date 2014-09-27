@@ -4,6 +4,7 @@ import os
 import re
 import shutil
 import syslog
+import sys
 import Tkinter as tk
 
 BASE_LOCAL='/home/student/Documents/tinkeracademy/Setup'
@@ -15,6 +16,41 @@ KEY_COURSE_NAME='CourseName'
 
 KEY_NAME='Name'
 KEY_ID='Id'
+
+class TinkerAcademyConfirmDialog(tk.Tk):
+	def __init__(self, message, action):
+		self._message = message
+		self._action = action
+		tk.Tk.__init__(self, None)
+	def show(self):
+		self._create_gui()
+		self.mainloop()
+	def _create_gui(self):
+		self.title('Tinker Academy CONFIRM Dialog')
+		self.grid()
+		self._tf_message = tk.Label(self, text = self._message)
+		self._tf_message.grid(column = 0, row = 0,sticky = 'EW', columnspan = 2)
+		self._btn_ok = tk.Button(self, text = 'YES', command = self._ok_command)
+		self._btn_ok.grid(column = 0, row = 1, columnspan = 1)
+		self._btn_cancel = tk.Button(self, text = 'NO', command = self._cancel_command)
+		self._btn_cancel.grid(column = 1, row = 1, columnspan = 1)
+		self._btn_cancel.focus_set()
+		self.grid_columnconfigure(0, weight = 1)
+		self.grid_columnconfigure(1, weight = 1)
+		self.bind('<Return>', self._return_event)
+		self.resizable(True, True)
+		self.geometry('{}x{}+{}+{}'.format(400, 64, 400, 300))
+	def _return_event(self, event):
+		self._cancel_command()
+	def _ok_command(self):
+		log_message('_ok_command enter')
+		self.destroy()
+		self._action()
+		log_message('_ok_command exit')
+	def _cancel_command(self):
+		log_message('_cancel_command enter')
+		self.destroy()
+		log_message('_cancel_command exit')
 
 class TinkerAcademyMessage(tk.Tk):
 	def __init__(self, message):
