@@ -14,8 +14,22 @@ from tinkeracademy import log_message
 from tinkeracademy import log_error
 from tinkeracademy import TinkerAcademyMessage
 
+def find_my_dir_path():
+ 	log_message('find_my_dir_path enter')
+ 	file_path = sys.argv[0]
+ 	log_message('sys.argv[0] file_path ' + file_path)
+ 	if os.path.islink(file_path):
+ 		file_path = os.readlink(file_path)
+ 	file_path = os.path.realpath(file_path)
+ 	log_message('sys.argv[0] real file_path ' + file_path)
+ 	dir_path = os.path.dirname(file_path)
+ 	log_message('dir_path ' + dir_path)
+ 	log_message('find_my_dir_path exit')
+ 	return dir_path 
+
+
 BASE_LOCAL='/home/student/Documents/tinkeracademy/Courses'
-BASE_REMOTE='/home/student/.Dropbox/Dropbox/classes/courses'
+BASE_REMOTE= os.path.join(find_my_dir_path(), '../courses')
 
 def copy_remote_to_local():
 	log_message('copy_remote_to_local enter')
