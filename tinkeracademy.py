@@ -17,6 +17,10 @@ KEY_COURSE_NAME='CourseName'
 KEY_NAME='Name'
 KEY_ID='Id'
 
+CLOBBER_IF_SOURCE_IS_NEWER=0
+CLOBBER_ALWAYS=1
+CLOBBER_NEVER=2
+
 class TinkerAcademyConfirmDialog(tk.Tk):
 	def __init__(self, message, action):
 		self._message = message
@@ -92,7 +96,7 @@ def get_relative_file_paths_in_dir(dir_path):
 	log_message('get_relative_file_paths_in_dir exit')
 	return relative_file_paths
 
-def copy_files(source_file_paths, target_file_paths, clobber=False):
+def copy_files(source_file_paths, target_file_paths, clobber=CLOBBER_IF_SOURCE_IS_NEWER):
 	log_message('copy_files enter')
 	log_message('copy_files source_file_paths=' + str(source_file_paths))
 	log_message('copy_files target_file_paths=' + str(target_file_paths))
@@ -128,8 +132,15 @@ def copy_files(source_file_paths, target_file_paths, clobber=False):
 					make_sure_path_exists(target_file)
 					source_digest = calc_digest(source_file)
 					target_digest = calc_digest(target_file)
-					if target_digest is None or clobber:
+					if target_digest is None:
 						shutil.copyfile(source_file, target_file)
+					elif clobber == CLOBBER_ALWAYS:
+						shutil.copyfile(source_file, target_file)
+					elif clobber == CLOBBER_IF_SOURCE_IS_NEWER:
+						last_mod_time_source_file = os.path.getmtime(source_file)
+						last_mod_time_target_file = os.path.getmtime(target_file)
+						if last_mod_time_source_file > last_mod_time_target_file:
+							shutil.copyfile(source_file, target_file)
 			else:
 				ret = -1
 				break

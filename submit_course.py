@@ -26,7 +26,7 @@ def copy_local_to_remote():
 		local_paths = get_local_course_paths(student_id)
 		remote_paths = get_remote_course_paths(student_id)
 		if local_paths and remote_paths:
-			ret = copy_files(local_paths, remote_paths, True)
+			ret = copy_files(local_paths, remote_paths)
 	log_message('copy_local_to_remote exit')
 	return ret
 
