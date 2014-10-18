@@ -13,6 +13,7 @@ from tinkeracademy import get_course_paths
 from tinkeracademy import log_message
 from tinkeracademy import log_error
 from tinkeracademy import TinkerAcademyMessage
+from post_update_hook import run_post_update_hook
 
 def find_my_dir_path():
  	log_message('find_my_dir_path enter')
@@ -105,6 +106,7 @@ def main():
 	log_message('update_course.py returned ' + str(ret))
 	gui = TinkerAcademyMessage(msg)
 	gui.show()
+	run_post_update_hook()
 
 if __name__ == "__main__":
 	main()
