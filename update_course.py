@@ -90,7 +90,7 @@ def main():
 	import time
 	t = time.strftime('%X %x %Z')
 	log_message('update_course.py started at ' + str(t))
-	msg = 'update course completed successfully'
+	msg = 'update course is in progress'
 	ret = 0
 	# ret = internet_on()
 	if ret == -1:
