@@ -10,6 +10,8 @@ import Tkinter as tk
 BASE_LOCAL='/home/student/Documents/tinkeracademy/Setup'
 BASE_REMOTE='/home/student/.Dropbox/Dropbox/'
 
+STUDENTS_DIR='students'
+
 KEY_STUDENT_ID='StudentId'
 KEY_COURSE_ID='CourseId'
 KEY_COURSE_NAME='CourseName'
@@ -80,6 +82,11 @@ class TinkerAcademyMessage(tk.Tk):
 	def _ok_command(self):
 		self.destroy()
 
+def is_remote_a_dropbox_folder(remote_path):
+	if re.search(BASE_REMOTE, remote_path):
+		return True
+	return False
+	
 def get_relative_file_paths_in_dir(dir_path):
 	log_message('get_relative_file_paths_in_dir enter')
 	relative_file_paths = []
@@ -161,6 +168,23 @@ def calc_digest(file_path):
 			# log_message('calc_digest digest='+str(digest))
 	# log_message('calc_digest exit')
 	return digest
+
+def get_remote_student_path():
+	log_message('get_remote_student_path enter')
+	student_id = read_student_id()
+	log_message('get_remote_student_path student_id='+str(student_id))
+	remote_path = os.path.join(BASE_REMOTE, STUDENTS_DIR, student_id)
+	log_message('get_remote_student_path enter')
+	return remote_path
+
+def get_remote_student_course_paths():
+	log_message('get_remote_student_course_paths enter')
+	student_id = read_student_id()
+	log_message('get_remote_student_course_paths student_id='+str(student_id))
+	remote_base_file_path = os.path.join(BASE_REMOTE, STUDENTS_DIR, student_id)
+	remote_course_paths = get_course_paths(remote_base_file_path, student_id)
+	log_message('get_remote_student_course_paths exit')
+	return remote_course_paths
 
 def get_course_paths(base_course_path, student_id):
 	log_message('get_course_paths enter')

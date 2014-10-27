@@ -96,7 +96,8 @@ def main():
 	if ret == -1:
 		msg = 'update course failed (no internet connection)'
 	else:	
-		ret = restart_dropbox()
+		ret = 0
+		# ret = restart_dropbox()
 		if ret == -1:
 			msg = 'update course failed (cannot sync)'
 		else:
