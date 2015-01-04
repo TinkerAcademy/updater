@@ -229,8 +229,13 @@ def list_student_courses(student_id):
 		student_profile = get_student_profile(student_id)
 		if student_profile:
 			student_courses = []
-			for i in range(1, 5):
-				course_id = student_profile[KEY_COURSE_ID + str(i)]
+			i = 0
+			while True:
+				i = i + 1
+				key = KEY_COURSE_ID + str(i)
+				if key not in student_profile:
+					break
+				course_id = student_profile[key]
 				if course_id and course_id != '0':
 					course = courses[course_id]
 					log_message('list_student_courses adding course='+str(course))
