@@ -29,7 +29,7 @@ def find_my_dir_path():
  	return dir_path 
 
 
-BASE_LOCAL='/home/student/Documents/tinkeracademy/Courses'
+BASE_LOCAL='/home/tinkeracademystudent/Documents/tinkeracademy/Courses'
 BASE_REMOTE= os.path.join(find_my_dir_path(), '../courses')
 
 def copy_remote_to_local():
@@ -90,7 +90,7 @@ def main():
 	import time
 	t = time.strftime('%X %x %Z')
 	log_message('update_course.py started at ' + str(t))
-	msg = 'update course is in progress'
+	msg = 'update course completed'
 	ret = 0
 	# ret = internet_on()
 	if ret == -1:

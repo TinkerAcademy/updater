@@ -7,12 +7,13 @@ import syslog
 import sys
 import Tkinter as tk
 
-BASE_LOCAL='/home/student/Documents/tinkeracademy/Setup'
-BASE_REMOTE='/home/student/.Dropbox/Dropbox/'
+BASE_LOCAL='/home/tinkeracademystudent/Documents/tinkeracademy/Setup'
+BASE_REMOTE='/home/tinkeracademystudent/Dropbox/'
 
 STUDENTS_DIR='students'
 
 KEY_STUDENT_ID='StudentId'
+KEY_EMAIL_ID='EmailId'
 KEY_COURSE_ID='CourseId'
 KEY_COURSE_NAME='CourseName'
 
@@ -169,9 +170,18 @@ def calc_digest(file_path):
 	# log_message('calc_digest exit')
 	return digest
 
-def get_remote_student_path():
+def get_other_remote_student_paths(student_id):
+	all_student_ids = get_student_ids()
+	other_student_paths = []
+	for other_student_id in all_student_ids:
+		if other_student_id == student_id:
+			continue
+		other_student_path = get_remote_student_path(other_student_id)
+		other_student_paths.append(other_student_path)
+	return other_student_paths
+
+def get_remote_student_path(student_id):
 	log_message('get_remote_student_path enter')
-	student_id = read_student_id()
 	log_message('get_remote_student_path student_id='+str(student_id))
 	remote_path = os.path.join(BASE_REMOTE, STUDENTS_DIR, student_id)
 	log_message('get_remote_student_path enter')
@@ -233,14 +243,17 @@ def list_student_courses(student_id):
 	return student_courses
 
 def read_student_id():
-	log_message('read_student_id enter')
+	return read_key(KEY_STUDENT_ID)
+
+def read_key(key_to_read):
+	log_message('read_key enter')
 	student_id = None
 	config_file_path = os.path.join(BASE_LOCAL, 'tinkeracademy.config')
-	log_message('read_student_id config_file_path=' + config_file_path)
+	log_message('read_key config_file_path=' + config_file_path)
 	lines = read_lines(config_file_path)
-	log_message('read_student_id lines=' + str(lines))
+	log_message('read_key lines=' + str(lines))
 	count = len(lines)
-	log_message('read_student_id line count=' + str(count))
+	log_message('read_key line count=' + str(count))
 	if lines and count > 0:
 		prog = re.compile("\s*=\s*")
 		for line in lines:
@@ -249,10 +262,10 @@ def read_student_id():
 				if key and value:
 					key = key.strip()
 					value = value.strip()
-					if key == KEY_STUDENT_ID:
+					if key == key_to_read:
 						student_id = value
 						break
-	log_message('read_student_id exit')
+	log_message('read_key exit')
 	return student_id
 
 def get_courses():
@@ -262,6 +275,13 @@ def get_courses():
 	courses = read_config(courses_file_path, KEY_COURSE_ID)
 	log_message('get_courses exit')
 	return courses
+
+def get_student_ids():
+	student_ids = []
+	student_profiles = get_student_profiles()
+	keys = student_profiles.keys()
+	student_ids.extend(keys)
+	return student_ids
 
 def get_student_profiles():
 	log_message('get_student_profiles enter')
@@ -344,6 +364,7 @@ def read_content(file_path):
 
 def log_message(message):
 	syslog.syslog("tinkeracademy message=" + str(message))
+	print "tinkeracademy message="+str(message)
 
 def log_error():
 	type_,value_,traceback_ = sys.exc_info()

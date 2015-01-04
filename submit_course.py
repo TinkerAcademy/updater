@@ -14,8 +14,8 @@ from tinkeracademy import log_error
 from tinkeracademy import log_message
 from tinkeracademy import TinkerAcademyMessage
 
-BASE_LOCAL='/home/student/Documents/tinkeracademy/Courses'
-BASE_REMOTE='/home/student/.Dropbox/Dropbox/students/'
+BASE_LOCAL='/home/tinkeracademystudent/Documents/tinkeracademy/Courses'
+BASE_REMOTE='/home/tinkeracademystudent/Dropbox/students/'
 
 def copy_local_to_remote():
 	log_message('copy_local_to_remote enter')

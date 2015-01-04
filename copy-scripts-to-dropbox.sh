@@ -1,3 +1,12 @@
-cp submit_course.py ~/Dropbox/classes/scripts/submit_course.py
-cp update_course.py ~/Dropbox/classes/scripts/update_course.py
-cp tinkeracademy.pyc ~/Dropbox/classes/scripts/tinkeracademy.pyc
+cp -rp update_submit.py ~/Dropbox/classes/scripts/update_submit.py
+cp -rp update_course.py ~/Dropbox/classes/scripts/
+cp -rp update_bash_env.sh ~/Dropbox/classes/scripts/
+cp -rp tinkeracademy.py ~/Dropbox/classes/scripts/
+cp -rp submit_course.py ~/Dropbox/classes/scripts/
+cp -rp restart_dropbox.sh ~/Dropbox/classes/scripts/
+cp -rp reset_submit.py ~/Dropbox/classes/scripts/
+cp -rp reset_minecraft_world.sh ~/Dropbox/classes/scripts/
+cp -rp reset_minecraft.py ~/Dropbox/classes/scripts/
+cp -rp post_update_hook.py ~/Dropbox/classes/scripts/
+cp -rp fix_odt.py ~/Dropbox/classes/scripts/
+cp -rp fix_it.py ~/Dropbox/classes/scripts/
