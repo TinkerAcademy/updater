@@ -13,9 +13,9 @@ BASE_REMOTE='/home/tinkeracademystudent/Dropbox/'
 STUDENTS_DIR='students'
 
 KEY_STUDENT_ID='StudentId'
-KEY_EMAIL_ID='EmailId'
 KEY_COURSE_ID='CourseId'
 KEY_COURSE_NAME='CourseName'
+KEY_COURSE_ENABLED='CourseEnabled'
 
 KEY_NAME='Name'
 KEY_ID='Id'
@@ -237,13 +237,17 @@ def list_student_courses(student_id):
 					break
 				course_id = student_profile[key]
 				if course_id and course_id != '0':
-					course = courses[course_id]
-					log_message('list_student_courses adding course='+str(course))
-					course_name = course[KEY_COURSE_NAME]
-					student_course = {}
-					student_course[KEY_NAME] = course_name
-					student_course[KEY_ID] = course_id
-					student_courses.append(student_course)
+					if course_id in courses:
+						course = courses[course_id]
+						if KEY_COURSE_ENABLED in course:
+							course_enabled = course[KEY_COURSE_ENABLED] == 'Y'
+							if course_enabled:
+								log_message('list_student_courses adding course='+str(course))
+								course_name = course[KEY_COURSE_NAME]
+								student_course = {}
+								student_course[KEY_NAME] = course_name
+								student_course[KEY_ID] = course_id
+								student_courses.append(student_course)
 	log_message('list_student_courses exit')
 	return student_courses
 
