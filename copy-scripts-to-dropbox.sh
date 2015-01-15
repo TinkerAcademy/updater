@@ -10,3 +10,4 @@ cp -rp reset_minecraft.py ~/Dropbox/classes/scripts/
 cp -rp post_update_hook.py ~/Dropbox/classes/scripts/
 cp -rp fix_odt.py ~/Dropbox/classes/scripts/
 cp -rp fix_it.py ~/Dropbox/classes/scripts/
+cp -rp poweroff.py ~/Dropbox/classes/scripts/

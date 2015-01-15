@@ -5,6 +5,7 @@ import uuid
 import sys
 import syslog
 import subprocess
+import shutil
 import urllib2
 import tinkeracademy
 from tinkeracademy import read_student_id
@@ -14,9 +15,24 @@ from tinkeracademy import log_message
 from tinkeracademy import log_error
 from tinkeracademy import TinkerAcademyMessage
 
+def find_my_dir_path():
+ 	log_message('find_my_dir_path enter')
+ 	file_path = sys.argv[0]
+ 	log_message('sys.argv[0] file_path ' + file_path)
+ 	if os.path.islink(file_path):
+ 		file_path = os.readlink(file_path)
+ 	file_path = os.path.realpath(file_path)
+ 	log_message('sys.argv[0] real file_path ' + file_path)
+ 	dir_path = os.path.dirname(file_path)
+ 	log_message('dir_path ' + dir_path)
+ 	log_message('find_my_dir_path exit')
+ 	return dir_path 
+
 BASE_LOCAL='/home/tinkeracademystudent/Documents/tinkeracademy/Setup'
 
 BASE_REMOTE= '/home/tinkeracademystudent/Dropbox/classes/scripts'
+
+BASE_SCRIPTS= os.path.join(find_my_dir_path(), '../scripts')
 
 # def setup_fix_it_link():
 #  	log_message('setup_fix_it_link enter')
@@ -29,6 +45,11 @@ BASE_REMOTE= '/home/tinkeracademystudent/Dropbox/classes/scripts'
 #  	subprocess.call(['ln', '-s', target_file, link_file])
 #  	log_message('setup_fix_it_link exit')
 
+def copy_scripts():
+	source_file = os.path.join(BASE_SCRIPTS, 'poweroff.py')
+	target_file = os.path.join(BASE_LOCAL, 'poweroff.py')
+	shutil.copyfile(source_file, target_file)
+
 def update_submit():
 	file_=os.path.join(BASE_REMOTE,'update_submit.py')
 	subprocess.call(['python', file_])
@@ -36,3 +57,4 @@ def update_submit():
 def run_post_update_hook():	
 	# setup_fix_it_link()
 	update_submit()
+	copy_scripts()
