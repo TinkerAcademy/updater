@@ -48,13 +48,14 @@ BASE_SCRIPTS= os.path.join(find_my_dir_path(), '../scripts')
 def copy_scripts():
 	source_file = os.path.join(BASE_SCRIPTS, 'poweroff.py')
 	target_file = os.path.join(BASE_LOCAL, 'poweroff.py')
-	shutil.copyfile(source_file, target_file)
+	shutil.copy2(source_file, target_file)
 
 def update_submit():
 	file_=os.path.join(BASE_REMOTE,'update_submit.py')
 	subprocess.call(['python', file_])
 
 def run_post_update_hook():	
+	print 'running post update hook'
 	# setup_fix_it_link()
-	update_submit()
 	copy_scripts()
+	update_submit()

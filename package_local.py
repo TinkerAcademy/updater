@@ -21,10 +21,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'SCRATCH Programming Adventure (TA-SCR-1)',
 		'CourseFileName': 'SCRATCH Programming Adventure.zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', ],
-			'homework': [ 'homework1', ],
-			'quiz' : [ 'quiz0', 'quiz1', ],
-			'starterpack': [ 'starterpack1', ],
+			'handout' : [ 'handout1'],
+			'homework': [ 'homework1'],
+			'quiz' : [ 'quiz0', 'quiz1'],
+			'starterpack': [ 'starterpack1' ],
 		},
 	},
 	'TA-JAV-1': {
@@ -32,10 +32,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'Programming Using Java (TA-JAV-1)',
 		'CourseFileName': 'Programming Using Java.zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', ],
-			'homework': [ 'homework1', ],
-			'quiz' : [ 'quiz0', 'quiz1', ],
-			'starterpack': [ 'starterpack1', ],
+			'handout' : [ 'handout1'],
+			'homework': [ 'homework1'],
+			'quiz' : [ 'quiz0', 'quiz1'],
+			'starterpack': [ 'starterpack1' ],
 		},
 	},
 	'TA-JAV-2': {
@@ -43,10 +43,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Programming) (TA-JAV-2)',
 		'CourseFileName': 'AP Computer Science Prep (Java Programming).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', ],
-			'homework': [ 'homework1', ],
-			'quiz' : [ 'quiz0', 'quiz1', ],
-			'starterpack': [ 'starterpack1', ],
+			'handout' : [ 'handout1', 'handout2'],
+			'homework': [ 'homework1', 'homework2'],
+			'quiz' : [ 'quiz1', 'quiz2'],
+			'starterpack': [ 'starterpack1', 'starterpack2'],
 		},
 	},
 	'TA-JAV-3': {
@@ -54,10 +54,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Data Structures & Algorithms) (TA-JAV-3)',
 		'CourseFileName': 'AP Computer Science Prep (Java Data Structures & Algorithms).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', ],
-			'homework': [ 'homework1', ],
-			'quiz' : [ 'quiz0', 'quiz1', ],
-			'starterpack': [ 'starterpack1', ],
+			'handout' : [ 'handout1', 'handout2'],
+			'homework': [ 'homework1', 'homework2'],
+			'quiz' : [ 'quiz1', 'quiz2'],
+			'starterpack': [ 'starterpack1', 'starterpack2'],
 		},
 	},
 }
@@ -70,6 +70,7 @@ COURSES_BASE='/Users/rvergis/Dropbox/classes/courses'
 TARGET_COURSES_BASE = 'courses'
 TARGET_BASE='/Users/rvergis/Documents/tinkeracademy/git/website/tinkeracademy/static'
 TARGET_TEMP_BASE='/Users/rvergis/Documents/tinkeracademy/git/website/tinkeracademy/static/_tmp'
+TARGET_TEMP_UPDATES='/Users/rvergis/Documents/tinkeracademy/git/website/tinkeracademy/static/_tmp/Classroom Updates'
 
 def package_local():
 	log_message('package_local enter')
@@ -109,15 +110,18 @@ def copy_common_tmp():
 	files_to_copy = []
 	target_dirs = []
 	files_to_copy.append(SCRIPTS_BASE)
-	target_dirs.append(os.path.join(TARGET_TEMP_BASE, TARGET_SCRIPTS_BASE))
+	target_dirs.append(os.path.join(TARGET_TEMP_UPDATES, TARGET_SCRIPTS_BASE))
 	files_to_copy.append(CONFIG_BASE)
-	target_dirs.append(os.path.join(TARGET_TEMP_BASE, TARGET_CONFIG_BASE))
+	target_dirs.append(os.path.join(TARGET_TEMP_UPDATES, TARGET_CONFIG_BASE))
 	for i in range(len(files_to_copy)):
 		file_to_copy = files_to_copy[i]
 		target_dir = target_dirs[i]
 		pdir = os.path.dirname(target_dir)
 		mkdirs(pdir)
 		shutil.copytree(file_to_copy, target_dir)
+	os.chdir(TARGET_TEMP_UPDATES)
+	os.system('ln -s scripts/update_course.py "Classroom Updates"')
+	os.system('chmod u+x "Classroom Updates"')
 	log_message('copy_common_tmp enter')
 
 def copy_course_tmp(course):
@@ -131,7 +135,7 @@ def copy_course_tmp(course):
 		for content in contents:
 			content_path = os.path.join(COURSES_BASE, coursename, contentkey, content)
 			files_to_copy.append(content_path)
-			target_dirs.append(os.path.join(TARGET_TEMP_BASE, TARGET_COURSES_BASE, coursename, contentkey, content))
+			target_dirs.append(os.path.join(TARGET_TEMP_UPDATES, TARGET_COURSES_BASE, coursename, contentkey, content))
 	for i in range(len(files_to_copy)):
 		file_to_copy = files_to_copy[i]
 		target_dir = target_dirs[i]
@@ -144,15 +148,19 @@ def copy_course_tmp(course):
 def package_tmp(course):
 	target_file_name = course['CourseFileName']
 	target_file_name = os.path.join(TARGET_BASE, target_file_name)
-	zipped = zipfile.ZipFile(target_file_name, 'w', zipfile.ZIP_DEFLATED)
-	filelist = get_relative_file_paths_in_dir(TARGET_TEMP_BASE)
-	for file_ in filelist:
-		zipped.write(os.path.join(TARGET_TEMP_BASE, file_), file_)
+	os.chdir(TARGET_TEMP_BASE)
+	os.system('zip -y -r "' + target_file_name + '" .')
+	# zipped = zipfile.ZipFile(target_file_name, 'w', zipfile.ZIP_DEFLATED)
+	# filelist = get_relative_file_paths_in_dir(TARGET_TEMP_BASE)
+	# for file_ in filelist:
+	# 	filepath = os.path.join(TARGET_TEMP_BASE, file_)
+	# 	zipped.write(filepath, file_)
 
 def cleanup_course_tmp(course):
 	coursename = course['CourseName']
-	target_dir = os.path.join(TARGET_TEMP_BASE, TARGET_COURSES_BASE, coursename)
-	shutil.rmtree(target_dir)
+	target_dir = os.path.join(TARGET_TEMP_UPDATES, TARGET_COURSES_BASE, coursename)
+	if os.path.exists(target_dir):
+		shutil.rmtree(target_dir)
 
 def cleanup_tmp():
 	shutil.rmtree(TARGET_TEMP_BASE)

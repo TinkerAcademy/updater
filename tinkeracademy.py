@@ -128,8 +128,10 @@ def copy_files(source_file_paths, target_file_paths, clobber=CLOBBER_IF_SOURCE_I
 				source_files.append(source_file_path)
 				target_files.append(target_file_path)
 			else:
-				ret = -1
-				break
+				# valid scenario
+				# ret = -1
+				# break
+				continue
 			k = len(source_files)
 			l = len(target_files)
 			if k == l:
