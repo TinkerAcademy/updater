@@ -43,10 +43,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Programming) (TA-JAV-2)',
 		'CourseFileName': 'AP Computer Science Prep (Java Programming).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', 'handout2'],
-			'homework': [ 'homework1', 'homework2'],
-			'quiz' : [ 'quiz1', 'quiz2'],
-			'starterpack': [ 'starterpack1', 'starterpack2'],
+			'handout' : [ 'handout1', 'handout2', 'handout3'],
+			'homework': [ 'homework3'],
+			'quiz' : [ 'quiz3'],
+			'starterpack': [ 'starterpack3'],
 		},
 	},
 	'TA-JAV-3': {
@@ -54,10 +54,10 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Data Structures & Algorithms) (TA-JAV-3)',
 		'CourseFileName': 'AP Computer Science Prep (Java Data Structures & Algorithms).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', 'handout2'],
-			'homework': [ 'homework1', 'homework2'],
-			'quiz' : [ 'quiz1', 'quiz2'],
-			'starterpack': [ 'starterpack1', 'starterpack2'],
+			'handout' : [ 'handout1', 'handout2', 'handout3'],
+			'homework': [ 'homework3'],
+			'quiz' : [ 'quiz3'],
+			'starterpack': [ 'starterpack3'],
 		},
 	},
 }
