@@ -50,19 +50,25 @@ BASE_CONFIG= os.path.join(find_my_dir_path(), '../config')
 #  	log_message('setup_fix_it_link exit')
 
 def copy_scripts():
-	source_file = os.path.join(BASE_SCRIPTS, 'poweroff.py')
-	target_file = os.path.join(BASE_LOCAL, 'poweroff.py')
-	shutil.copy2(source_file, target_file)
+	try:
+		source_file = os.path.join(BASE_SCRIPTS, 'poweroff.py')
+		target_file = os.path.join(BASE_LOCAL, 'poweroff.py')
+		shutil.copy2(source_file, target_file)
+	except:
+		pass
 
 def copyconfig():
 	# copy courses.csv from LOCAL remote to BASE REMOTE CONFIG remote
-	source_file = os.path.join(BASE_CONFIG, 'courses.csv')
-	target_file = os.path.join(BASE_REMOTE_CONFIG, 'courses.csv')
-	shutil.copy2(source_file, target_file)
-	# copy students.csv from LOCAL remote to BASE REMOTE CONFIG remote
-	source_file = os.path.join(BASE_CONFIG, 'students.csv')
-	target_file = os.path.join(BASE_REMOTE_CONFIG, 'students.csv')
-	shutil.copy2(source_file, target_file)
+	try:
+		source_file = os.path.join(BASE_CONFIG, 'courses.csv')
+		target_file = os.path.join(BASE_REMOTE_CONFIG, 'courses.csv')
+		shutil.copy2(source_file, target_file)
+		# copy students.csv from LOCAL remote to BASE REMOTE CONFIG remote
+		source_file = os.path.join(BASE_CONFIG, 'students.csv')
+		target_file = os.path.join(BASE_REMOTE_CONFIG, 'students.csv')
+		shutil.copy2(source_file, target_file)
+	except:
+		pass
 
 def update_submit():
 	file_=os.path.join(BASE_REMOTE,'update_submit.py')
@@ -72,5 +78,5 @@ def run_post_update_hook():
 	print 'running post update hook'
 	# setup_fix_it_link()
 	copy_scripts()
-	copyconfig()
+	# copyconfig()
 	update_submit()
