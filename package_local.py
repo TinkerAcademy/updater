@@ -16,18 +16,19 @@ from tinkeracademy import log_error
 from tinkeracademy import TinkerAcademyMessage
 
 COURSE_PACKAGES = {
-	'TA-SCR-1': {
-		'CourseName' : 'TA-SCR-1',
-		'CourseDescription' : 'SCRATCH Programming Adventure (TA-SCR-1)',
-		'CourseFileName': 'SCRATCH Programming Adventure.zip',
-		'CourseContent' : {
-		},
-	},
+	# 'TA-SCR-1': {
+	# 	'CourseName' : 'TA-SCR-1',
+	# 	'CourseDescription' : 'SCRATCH Programming Adventure (TA-SCR-1)',
+	# 	'CourseFileName': 'SCRATCH Programming Adventure.zip',
+	# 	'CourseContent' : {
+	# 	},
+	# },
 	'TA-JAV-1': {
 		'CourseName' : 'TA-JAV-1',
 		'CourseDescription' : 'Programming Using Java (TA-JAV-1)',
 		'CourseFileName': 'Programming Using Java.zip',
 		'CourseContent' : {
+			'exam' : [ 'finalexam' ]
 		},
 	},
 	'TA-JAV-2': {
@@ -35,10 +36,11 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Programming) (TA-JAV-2)',
 		'CourseFileName': 'AP Computer Science Prep (Java Programming).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', 'handout2', 'handout3'],
-			'homework': [ 'homework1', 'homework2', 'homework3'],
-			'quiz' : [ 'quiz1','quiz2','quiz3'],
-			'starterpack': ['starterpack1','starterpack2','starterpack3'],
+			'exam' : [ 'finalexam' ]
+			# 'handout' : [ 'handout1', 'handout2', 'handout3', 'handout4'],
+			# 'homework': [ 'homework1', 'homework2', 'homework3', 'homework4'],
+			# 'quiz' : [ 'quiz1','quiz2','quiz3', 'quiz4'],
+			# 'starterpack': ['starterpack1','starterpack2','starterpack3', 'starterpack4'],
 		},
 	},
 	'TA-JAV-3': {
@@ -46,10 +48,11 @@ COURSE_PACKAGES = {
 		'CourseDescription' : 'AP Computer Science Prep (Java Data Structures & Algorithms) (TA-JAV-3)',
 		'CourseFileName': 'AP Computer Science Prep (Java Data Structures & Algorithms).zip',
 		'CourseContent' : {
-			'handout' : [ 'handout1', 'handout2', 'handout3'],
-			'homework': [ 'homework1', 'homework2', 'homework3'],
-			'quiz' : [ 'quiz1','quiz2','quiz3'],
-			'starterpack': ['starterpack1','starterpack2','starterpack3'],
+			'exam' : [ 'finalexam' ]
+			# 'handout' : [ 'handout1', 'handout2', 'handout3', 'handout4'],
+			# 'homework': [ 'homework1', 'homework2', 'homework3', 'homework4'],
+			# 'quiz' : [ 'quiz1','quiz2','quiz3', 'quiz4'],
+			# 'starterpack': ['starterpack1','starterpack2','starterpack3', 'starterpack4'],
 		},
 	},
 }
@@ -80,6 +83,7 @@ def package_local():
 		cleanup_course_tmp(course)
 	cleanup_tmp()
 	log_message('package_local exit')
+	return 0
 
 def cleanup_local(course):
 	log_message('cleanup_local enter')
